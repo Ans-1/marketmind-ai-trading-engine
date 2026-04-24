@@ -1,0 +1,17 @@
+# .gitignore
+
+# Environment Variables (CRITICAL)
+.env
+
+# Virtual Environments
+.venv/
+env/
+venv/
+
+# Python Cache
+__pycache__/
+*.pyc
+
+# Local databases/state (if we add them later)
+*.db
+*.sqlite3
