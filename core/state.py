@@ -25,3 +25,11 @@ class MarketMindState(TypedDict):
     final_verdict: Optional[str]
     final_confidence: Optional[float]
     final_reasoning: Optional[str]
+
+    # Execution Layer (New)
+    market_regime: str | None
+    regime_weights: dict | None
+    conviction_score: float | None
+    proposed_trade: dict | None
+    firewall_passed: bool | None
+    execution_status: dict | None

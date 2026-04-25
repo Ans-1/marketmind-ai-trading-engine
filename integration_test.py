@@ -3,59 +3,60 @@ import time
 from core.state import MarketMindState
 from core.graph import marketmind_app
 
-def test_full_graph():
+def test_execution_pipeline():
     ticker = "BTC-USD"
-    asset_type = "crypto"
     
     print("="*60)
-    print(f"🚀 INITIATING MARKETMIND MULTI-AGENT PIPELINE FOR {ticker}")
+    print(f"🚀 INITIATING MARKETMIND EXECUTION PIPELINE FOR {ticker}")
     print("="*60)
     
-    # 1. Initialize the blank slate
     initial_state = MarketMindState(
         ticker=ticker,
-        asset_type=asset_type,
+        asset_type="crypto",
         agent_signals=[],
         final_verdict=None,
         final_confidence=None,
-        final_reasoning=None
+        final_reasoning=None,
+        market_regime=None,
+        regime_weights=None,
+        conviction_score=None,
+        proposed_trade=None,
+        firewall_passed=None,
+        execution_status=None
     )
     
-    # Start the timer!
     start_time = time.time()
     
-    print("⚡ [FAN-OUT] Firing all 5 specialist agents in parallel...")
-    
-    # 2. Run the Graph!
-    # This single line handles the entire fan-out/fan-in process
+    # 1. Run the entire graph (Oracle -> Scoring -> Firewall -> Execution)
     result = marketmind_app.invoke(initial_state)
     
     execution_time = round(time.time() - start_time, 2)
     
-    print("📥 [FAN-IN] All agents reported back. Synthesis complete.\n")
+    # 2. Print the Execution Dashboard
+    print("\n" + "="*60)
+    print("🧠 1. QUANTITATIVE SCORING")
+    print("="*60)
+    print(f"Market Regime:    {result['market_regime']}")
+    print(f"Conviction Score: {result['conviction_score']} (Scale: -1.0 to 1.0)")
     
-    # 3. Print the Specialist Breakdowns
-    print("-" * 60)
-    print("🕵️ SPECIALIST AGENT BREAKDOWN")
-    print("-" * 60)
+    print("\n" + "="*60)
+    print("🛡️ 2. RISK FIREWALL & PORTFOLIO MANAGER")
+    print("="*60)
+    trade = result['proposed_trade']
+    print(f"Proposed Action:  {trade['action']}")
+    print(f"Position Size:    ${trade['position_size_usd']}")
+    print(f"Firewall Passed?: {result['firewall_passed']}")
     
-    signals = result.get("agent_signals", [])
-    for s in signals:
-        agent_name = s['agent'].upper()
-        # Formatting so the columns align nicely
-        print(f"{agent_name:<12} -> {s['signal']:<8} (Conf: {s['confidence']*100:0.0f}%) | {s['summary']}")
-        
-    # 4. Print the Final Synthesis
-    print("\n" + "=" * 60)
-    print("👑 THE SYNTHESIS AGENT'S FINAL VERDICT")
-    print("=" * 60)
+    print("\n" + "="*60)
+    print("⚡ 3. EXECUTION STATUS")
+    print("="*60)
+    status = result['execution_status']
+    print(f"Status: {status['status'].upper()}")
+    if 'reason' in status:
+        print(f"Note:   {status['reason']}")
     
-    print(f"Verdict:    {result['final_verdict']}")
-    print(f"Confidence: {result['final_confidence'] * 100:0.0f}%")
-    print(f"Reasoning:  {result['final_reasoning']}\n")
-    
-    print(f"⏱️ Total parallel execution time: {execution_time} seconds")
-    print("=" * 60)
+    print(f"\n⏱️ Total execution time: {execution_time} seconds")
+    print("="*60)
 
 if __name__ == "__main__":
-    test_full_graph()
+    test_execution_pipeline()
