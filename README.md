@@ -32,24 +32,25 @@ MarketMind features a dynamic routing layer, allowing you to operate as a surgic
 ### Omni Mode (Global Radar)
 Scans the entire asset universe, finds the top 3 momentum setups globally, and deploys the AI swarm to allocate capital to the absolute winner.
 
-    python test_master.py
+    uv run integration_testing.py
 
 ### Category Mode (Sector Scan)
 Restricts the Omni-Screener to a specific asset class.
 
-    python test_master.py --category crypto
+    uv run integration_testing.py --category crypto
 
 ### Explicit Mode (Sniper)
 Bypasses the global screener and targets a specific ticker. (Includes the Pre-Flight momentum check to ensure the asset is actually moving before waking up the AI).
 
-    python test_master.py --ticker AAPL --type equities
+    uv run integration_test.py --ticker AAPL --type equities
 
 ## 📂 Project Structure
 
     marketmind/
     ├── .env                    # API Keys (GIT IGNORED)
     ├── pyproject.toml          # Dependencies
-    ├── test_master.py          # CLI entry point and orchestrator
+    ├── unit_test.py            # Individual agent tests
+    ├── integration_test.py     # CLI entry point and orchestrator
     └── core/
         ├── state.py            # LangGraph State definition
         ├── graph.py            # Node and Edge wiring
