@@ -1,17 +1,28 @@
-# .gitignore
-
-# Environment Variables (CRITICAL)
+# Environment
 .env
+.env.*
+!.env.example
 
-# Virtual Environments
+# Python
+__pycache__/
+*.pyc
+*.pyo
 .venv/
 env/
 venv/
 
-# Python Cache
-__pycache__/
-*.pyc
+# MLflow
+mlruns/
 
-# Local databases/state (if we add them later)
-*.db
-*.sqlite3
+# ChromaDB
+marketmind_memory/
+test_db/
+
+# Editor
+.vscode/
+.idea/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db

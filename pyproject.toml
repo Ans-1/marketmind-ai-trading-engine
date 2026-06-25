@@ -1,22 +1,51 @@
 [project]
 name = "marketmind"
-version = "0.1.0"
-description = "Add your description here"
+version = "1.0.0"
+description = "Multi-agent AI trading analysis engine with LangGraph orchestration, quantitative scoring, and FastAPI exposure."
 readme = "README.md"
 requires-python = ">=3.13"
+
 dependencies = [
+    # AI orchestration
+    "langgraph==1.2.6",
+    "langchain-core==1.4.8",
+    "langchain-groq==1.1.2",
+    # API layer
     "fastapi>=0.136.1",
-    "fredapi>=0.5.2",
-    "langchain-core>=1.3.1",
-    "langchain-groq>=1.1.2",
-    "langgraph>=1.1.9",
-    "newsapi-python>=0.2.7",
-    "numpy>=2.4.4",
-    "pandas>=3.0.2",
+    "uvicorn>=0.34.0",
+    "pydantic>=2.0.0",
+    # GUI
+    "streamlit>=1.45.0",
+    # Market data
+    "yfinance>=0.2.54",
     "pycoingecko>=3.2.0",
-    "python-dotenv>=1.2.2",
-    "requests>=2.33.1",
-    "streamlit>=1.56.0",
-    "uvicorn>=0.46.0",
-    "yfinance>=1.3.0",
+    "newsapi-python>=0.2.7",
+    "fredapi>=0.5.2",
+    "requests>=2.32.3",
+    # Quantitative math
+    "pandas>=2.2.3",
+    "numpy>=2.2.0",
+    # Observability
+    "mlflow==2.20.2",
+    # Memory
+    "chromadb==1.5.9",
+    "onnxruntime>=1.19.0",
+    # Utilities
+    "python-dotenv>=1.0.1",
+]
+
+[project.scripts]
+marketmind = "main:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["."]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.0.0",
+    "httpx>=0.27.0",
 ]
